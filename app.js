@@ -18,11 +18,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.log(err));
 
-app.get('/', (req, res) => {
-   res.send('Hello World')
-});
-
-app.use('/users', usersRoute);
+app.use('/api/users', usersRoute);
 
 const port = process.env.PORT || 5000;
 
