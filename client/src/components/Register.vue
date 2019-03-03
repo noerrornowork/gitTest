@@ -8,13 +8,13 @@
           <el-input type="email" v-model="registerForm.email" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="registerForm.pass"></el-input>
+          <el-input type="text" v-model="registerForm.pass"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="conPass">
-          <el-input type="password" v-model="registerForm.conPass"></el-input>
+          <el-input type="text" v-model="registerForm.conPass"></el-input>
         </el-form-item>
         <el-form-item label="选择身份" prop="identify">
-          <el-select v-model="registerForm.identify" placeholder="请选择身份">
+          <el-select v-model="registerForm.identity" placeholder="请选择身份">
             <el-option v-for="item in identifyOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -74,7 +74,7 @@
               email: '',
               pass: '',
               conPass: '',
-              identify: ''
+              identity: ''
             },
             identifyOptions: identifyOptions,
             registerRules: registerRules
