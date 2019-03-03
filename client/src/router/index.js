@@ -8,7 +8,7 @@ import Login from '@/components/Login'
 
 Vue.use(Router);
 
-export default new Router({
+ const router = new Router({
   routes: [
     {
       path: '/',
@@ -35,4 +35,19 @@ export default new Router({
       component: Login
     }
   ]
-})
+});
+
+ // 路由守卫
+
+// 假Token
+const eleToken = "Bearer jfjeo40jvvovnvioow";
+router.beforeEach((to, from, next) => {
+  const isLogin = localStorage.eleToken ? true : false;
+  if (to.path === "/login" || to.path === "/register") {
+    next()
+  } else {
+    isLogin ? next() : next('/login');
+  }
+});
+
+export default router

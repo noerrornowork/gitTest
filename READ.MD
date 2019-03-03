@@ -22,3 +22,19 @@
                 })
                 .catch(err => console.log(err))
         }));`
+- 4. 关于每个接口,都需要进行Token验证,在登陆的时候将Token(hash值)存储在localStorage中
+- 5. 路由守卫
+    `
+        const eleToken = "Bearer jfjeo40jvvovnvioow";
+        router.beforeEach((to, from, next) => {
+          const isLogin = localStorage.eleToken ? true : false;
+          if (to.path === "/login" || to.path === "/register") {
+            next()
+          } else {
+            isLogin ? next() : next('/login');
+          }
+        });
+    `
+- 6. 解析Token,并将Token存入Vuex中
+    ...
+
