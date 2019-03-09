@@ -36,11 +36,11 @@ router.post("/register", (req,res) => {
                    if (err) throw err;
                    bcrypt.hash(newUser.password, salt, (err, hash) => {
                        newUser.password = hash;
-
+                        // 将注册的新用户保存
                        newUser.save()
                            .then(user => res.json(
                                {
-                                   errCode: 0,
+                                   errCode: "0",
                                    errMsg: "",
                                    user
                                }
@@ -53,7 +53,6 @@ router.post("/register", (req,res) => {
         })
         .catch(err => console.error(err))
 });
-
 // 登陆接口: 获取Token
 router.post("/login", (req, res) => {
     console.log(req.body);
@@ -64,31 +63,41 @@ router.post("/login", (req, res) => {
     User.findOne({email})
         .then(user => {
             if(!user) {
-                return res.status(500).json({email: "此用户不存在"});
+                return res.status(500).json({
+                    errCode: "1",
+                    errMsg: "请重新注册",
+                    email: "此用户不存在"
+                });
             }
             console.log(user);
             // 密码匹配
-            let resp = bcrypt.compareSync(password, user.password);
-            console.log(resp);
-            if(!resp) {
-                return res.status(500).json({msg: "密码不匹配"})
-            }
-
-            // 密码匹配时
-            const rule = {id: user.id, name: user.name};
-            jwt.sign(rule, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
-                if(err) throw err;
-                res.json({
-                    errCode: "0",
-                    errMsg: "",
-                    token: "Bear " + token
+            bcrypt.compare(password, user.password)
+                .then(isMatch => {
+                    if(isMatch) {
+                        // 密码匹配时
+                        const rule = {id: user._id, name: user.name};
+                        // 密码签名: 签名规则, 签名字符串, token过期时间, 回调函数
+                        jwt.sign(rule, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
+                            if(err) throw err;
+                            res.json({
+                                errCode: "0",
+                                errMsg: "",
+                                token: "Bear " + token
+                            })
+                        });
+                    } else {
+                        return res.status(500).json({
+                            errCode: "1",
+                            errMsg: "密码错误",
+                            msg: "密码不匹配"
+                        })
+                    }
                 })
-            })
         })
         .catch(err => console.log(err))
 });
 
-// 验证Token
+// 验证Token, 样例
 router.get("/current", passport.authenticate("jwt", {session: false}), (req, res) => {
     res.json({
         id: req.user.id,

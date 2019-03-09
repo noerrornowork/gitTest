@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema
+// Create Schema: 对接数据库字段定义结构
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -22,5 +22,5 @@ const UserSchema = new Schema({
         default: Date.now
     }
 });
-
+// 实例化user
 module.exports = User = mongoose.model("User", UserSchema);

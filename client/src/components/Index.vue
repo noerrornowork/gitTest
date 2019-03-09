@@ -5,8 +5,23 @@
 </template>
 
 <script>
+  import { test } from '../api'
     export default {
-        name: "index"
+      name: "index",
+      created() {
+          this.getData();
+      },
+      data() {
+        return {
+
+        }
+      },
+      methods: {
+        async getData() {
+          let res = await test();
+          console.log(res.data);
+        }
+      }
     }
 </script>
 

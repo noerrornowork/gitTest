@@ -3,7 +3,7 @@
 - 命令行: npm run all即可
 
 - Token获取: 在登陆接口,返回token令牌
-- 1. 安装jsonwebtoken npm install jsonwebtoken
+- 1. 安装jsonwebtoken: npm install jsonwebtoken
 - 2. 引入jsonwebtoken
 - 3. jwt.sign("规则", "加密字符", "过期间隔", "箭头函数")
 
