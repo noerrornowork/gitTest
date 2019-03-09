@@ -19,7 +19,7 @@
     export default {
       name: "login",
       created() {
-        this.getUser()
+        this.getUser();
       },
       data() {
         const loginRules = {
@@ -44,8 +44,16 @@
           this.$refs[formName].validate(valid => {
             if(valid) {
               console.log("校验表单");
-              this.checkLogin();
-              this.getUser();
+              this.checkLogin().then(resp => {
+                if(resp.data.errCode === '0') {
+                  // console.log(resp.data.token);
+                  let token = resp.data.token;
+                  // 将token存入localStorage
+                  localStorage.setItem("eleToken", token);
+                  // 跳转到主页
+                  this.$router.push("/index")
+                }
+              })
             }
           })
         },
@@ -54,8 +62,7 @@
             email: this.loginForm.email,
             password: this.loginForm.pass
           };
-          let res = await doLogin(args);
-          console.log(res);
+          return await doLogin(args);
         },
         async getUser() {
           let res = await getCurrentUserInfo();

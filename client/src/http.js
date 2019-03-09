@@ -1,6 +1,6 @@
-import axios from 'axios'
+import $axios from 'axios'
 import { Loading } from 'element-ui'
-import router from './router'
+// import router from './router'
 
 let loading;
 function startLoading() {
@@ -16,12 +16,11 @@ function endLoading() {
 }
 
 // 请求拦截
-axios.interceptors.request.use(config => {
+$axios.interceptors.request.use(config => {
   startLoading();
-
   // 如果Token存在的话, 向每个接口请求头加入Token,不然没有权限获取接口数据
-  if (localStorage.eleToken) {
-    config.headers.Authorization = localStorage.eleToken;
+  if (localStorage.getItem("eleToken")) {
+    config.headers.Authorization = localStorage.getItem("eleToken");
   }
   return config;
 }, err => {
@@ -29,12 +28,11 @@ axios.interceptors.request.use(config => {
 });
 
 // 响应拦截
-axios.interceptors.response.use(response => {
+$axios.interceptors.response.use(response => {
   endLoading();
   return response;
 }, err => {
   endLoading();
-
   const { status } = err.response;
   if(status === 401) {
     this.$alert('登陆已过期', 'Token已失效', {
@@ -50,4 +48,4 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 });
 
-export default axios;
+export default $axios;

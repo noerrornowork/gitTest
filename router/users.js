@@ -19,7 +19,6 @@ router.get('/test', (req, res) => {
 // 注册接口
 router.post("/register", (req,res) => {
     // console.log(req.body);
-
     User.findOne({email: req.body.email})
         .then(user => {
             if(user) {
@@ -31,14 +30,28 @@ router.post("/register", (req,res) => {
                     password: req.body.password,
                     identity: req.body.identity
                 });
-                let salt = bcrypt.genSaltSync(10);
-                let hash = bcrypt.hashSync(newUser.password, salt);
-                newUser.password = hash;
-                newUser.save()
-                    .then(user => res.json(user))
-                    .catch(err => console.log(err));
+                // let salt = bcrypt.genSaltSync(10);
+                // let hash = bcrypt.hashSync(newUser.password, salt);
+                bcrypt.genSalt(10, (err, salt) => {
+                   if (err) throw err;
+                   bcrypt.hash(newUser.password, salt, (err, hash) => {
+                       newUser.password = hash;
+
+                       newUser.save()
+                           .then(user => res.json(
+                               {
+                                   errCode: 0,
+                                   errMsg: "",
+                                   user
+                               }
+                           ))
+                           .catch(err => console.log(err));
+                   })
+                });
+                // newUser.password = hash;
             }
         })
+        .catch(err => console.error(err))
 });
 
 // 登陆接口: 获取Token
