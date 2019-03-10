@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 import Index from '@/components/Index'
 import Register from '@/components/Register'
 import NotFound from '@/components/NotFound'
 import Login from '@/components/Login'
+import Home from '@/components/Home'
+import FundList from '@/components/FundList'
+import InfoShow from '@/components/InfoShow'
 
 Vue.use(Router);
 
@@ -17,7 +19,13 @@ Vue.use(Router);
     {
       path: '/index',
       name: 'index',
-      component: Index
+      component: Index,
+      children: [
+        {path: '', component: Home},
+        {path: '/home', component: Home},
+        {path: '/fundList', name: 'fundList', component: FundList},
+        {path: '/infoShow', name: 'infoShow', component: InfoShow}
+      ]
     },
     {
       path: '/register',

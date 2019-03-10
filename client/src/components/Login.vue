@@ -15,11 +15,11 @@
 </template>
 
 <script>
-  import { doLogin, getCurrentUserInfo } from '../api'
+  import { doLogin } from '../api'
     export default {
       name: "login",
       created() {
-        this.getUser();
+
       },
       data() {
         const loginRules = {
@@ -63,10 +63,6 @@
             password: this.loginForm.pass
           };
           return await doLogin(args);
-        },
-        async getUser() {
-          let res = await getCurrentUserInfo();
-          console.log(res);
         }
       }
     }

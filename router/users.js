@@ -77,7 +77,7 @@ router.post("/login", (req, res) => {
                         // 密码匹配时
                         const rule = {id: user._id, name: user.name};
                         // 密码签名: 签名规则, 签名字符串, token过期时间, 回调函数
-                        jwt.sign(rule, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
+                        jwt.sign(rule, keys.secretOrKey, {expiresIn: 36000}, (err, token) => {
                             if(err) throw err;
                             res.json({
                                 errCode: "0",

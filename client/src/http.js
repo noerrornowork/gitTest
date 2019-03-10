@@ -1,6 +1,7 @@
 import $axios from 'axios'
 import { Loading } from 'element-ui'
-// import router from './router'
+import Vue from 'vue'
+import router from './router'
 
 let loading;
 function startLoading() {
@@ -34,8 +35,9 @@ $axios.interceptors.response.use(response => {
 }, err => {
   endLoading();
   const { status } = err.response;
+  console.log(status);
   if(status === 401) {
-    this.$alert('登陆已过期', 'Token已失效', {
+    new Vue().$alert('登陆已过期', 'Token已失效', {
       confirmButtonText: '确定',
       callback: action => {
         // 清除Token
@@ -45,7 +47,7 @@ $axios.interceptors.response.use(response => {
       }
     });
   }
-  return Promise.reject(err)
+  return Promise.reject(err.response)
 });
 
 export default $axios;

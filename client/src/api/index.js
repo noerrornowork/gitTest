@@ -17,3 +17,6 @@ export let getCurrentUserInfo = () => {
   return $axios.get("api/users/current")
 };
 // 资金管理模块
+export let getAllProfiles = () => {
+  return $axios.get('api/profiles')
+};

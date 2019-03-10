@@ -36,14 +36,13 @@ router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
            if (!profiles) {
                return res.status(500).json("没有任何数据")
            }
-
            res.json({
                errCode: "0",
                errMsg: "",
                profiles
            })
        })
-       .catch(err => res,status(500).json({
+       .catch(err => res.status(500).json({
            errCode: "1",
            errMsg: err
        }))
@@ -55,14 +54,13 @@ router.get("/:id", passport.authenticate('jwt', {session: false}), (req, res) =>
             if (!profile) {
                 return res.status(500).json("没有任何数据")
             }
-
             res.json({
                 errCode: "0",
                 errMsg: "",
                 profile
             })
         })
-        .catch(err => res,status(500).json({
+        .catch(err => res.status(500).json({
             errCode: "1",
             errMsg: err
         }))
@@ -108,7 +106,7 @@ router.get("/delete:id", passport.authenticate('jwt', {session: false}), (req, r
                     })
                 })
         })
-        .catch(err => res,status(500).json({
+        .catch(err => res.status(500).json({
             errCode: "1",
             errMsg: "删除失败:" + err
         }))

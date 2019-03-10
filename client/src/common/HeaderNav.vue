@@ -33,6 +33,12 @@
   background-color: #324057;
   color: #fff;
   border-bottom: 1px solid #1f2d3f;
+  .el-row {
+    height: 100%;
+    .el-col {
+      height: 100%;
+    }
+  }
   .logo-container {
     display: flex;
     align-items: center;
@@ -41,6 +47,8 @@
       height: 30px;
     }
     .title {
+      flex: auto;
+      width: 200px;
       line-height: 30px;
       font-size: 14px;
       letter-spacing: 2px;

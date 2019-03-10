@@ -1,17 +1,22 @@
 <template>
     <div class="index">
       <header-nav></header-nav>
-      <h1>初始化页面</h1>
+      <left-menu></left-menu>
+      <home></home>
     </div>
 </template>
 
 <script>
   import { test } from '../api'
   import HeaderNav from '../common/HeaderNav'
+  import LeftMenu from '../common/LeftMenu'
+  import Home from '../components/Home'
     export default {
       name: "index",
       components: {
-        HeaderNav
+        HeaderNav,
+        LeftMenu,
+        Home
       },
       created() {
           this.getData();
